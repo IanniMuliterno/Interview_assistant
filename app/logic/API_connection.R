@@ -8,14 +8,15 @@ box::use(
 your_LLM <- function(prompt, 
                    temperature=0.5,
                    max_output_tokens=1024,
-                   your_bard_key){
+                   your_bard_key,
+                   model = "gemini-pro"){
 
 model_query <- paste0(model, ":generateContent")
   
-  response <- POST(
+  response <- httr$POST(
     url = paste0("https://generativelanguage.googleapis.com/v1beta/models/", model_query),
-    query = list(key = api_key),
-    content_type_json(),
+    query = list(key = your_bard_key),
+    httr$content_type_json(),
     encode = "json",
     body = list(
       contents = list(
@@ -33,7 +34,7 @@ model_query <- paste0(model, ":generateContent")
     stop(paste("Status Code - ", response$status_code))
   }
   
-  candidates <- httr::content(response)$candidates
+  candidates <- httr$content(response)$candidates
   outputs <- unlist(lapply(candidates, function(candidate) candidate$content$parts))
   
   return(outputs)
