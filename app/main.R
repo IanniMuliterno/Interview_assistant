@@ -1,25 +1,31 @@
 box::use(
-  shiny[bootstrapPage, div, moduleServer, NS, renderUI, tags, uiOutput],
+  shiny,
+)
+
+box::use(
+  app/view/itvw_type
 )
 
 #' @export
 ui <- function(id) {
-  ns <- NS(id)
-  bootstrapPage(
-    uiOutput(ns("message"))
+  ns <- shiny$NS(id)
+  shiny$bootstrapPage(
+    itvw_type$ui(id = ns("itvw_type"),
+    input_title = "Who is interviewing you",
+    choice_list = c("HR","Tech manager")
+
+    ),
+    shiny$uiOutput(ns("message"))
   )
 }
 
 #' @export
 server <- function(id) {
-  moduleServer(id, function(input, output, session) {
-    output$message <- renderUI({
-      div(
-        style = "display: flex; justify-content: center; align-items: center; height: 100vh;",
-        tags$h1(
-          tags$a("Check out Rhino docs!", href = "https://appsilon.github.io/rhino/")
-        )
-      )
+  shiny$moduleServer(id, function(input, output, session) {
+    output$message <- shiny$renderUI({
+      
+      "hello world"
+      
     })
   })
 }
