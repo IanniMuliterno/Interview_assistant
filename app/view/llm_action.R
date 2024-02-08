@@ -9,7 +9,7 @@ box::use(
 #' @export 
 ui <- function(id) {
     ns <- NS(id)
-    box(shiny$renderText("output_ai"))
+    shiny$HTML("output_ai")
 }
 
 
@@ -20,9 +20,15 @@ server <- function(id,your_key,position_input,desc_input,company_input,type_inpu
     moduleServer(
         id = id,
         module = function(session,input,output) {
-
-            your_prpt <- prompt_gen(position_input,desc_input,company_input,type_input,exp_input)
+          
+          output$output_ai <- ({
+            
+            your_prpt <- prompt_gen(position_input(),desc_input(),company_input(),type_input(),exp_input())
             API_connection$your_llm(prompt = your_prpt,your_bard_key = your_key)
+            
+          })
+
+            
 
         }
     )    
