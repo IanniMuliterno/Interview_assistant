@@ -24,6 +24,21 @@ ui <- function(id) {
         id = ns("position"),
         "Position",
         "insert position here"
+      ),
+      text_input$ui(
+        id = ns("job_desc"),
+        "Job description",
+        "under 300 words"
+      ),
+      text_input$ui(
+        id = ns("company"),
+        "Company",
+        "Target company?"
+      ),
+      text_input$ui(
+        id = ns("experience"),
+        "Your experience",
+        "under 300 words"
       )  
 
     
