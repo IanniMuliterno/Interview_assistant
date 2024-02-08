@@ -1,11 +1,13 @@
 box::use(
   shiny,
   bslib,
+  lubridate,
 )
 
 box::use(
   app/view/itvw_type,
   app/view/text_input,
+  app/view/timer,
 )
 
 #' @export
@@ -21,7 +23,10 @@ ui <- function(id) {
           id = ns("key"),
           "Bard key",
           "insert your bard key"
-        )
+        ),
+        shiny$numericInput('settime','Seconds:',value=10,min=0,max=180,step=1),
+        
+      bslib$card()  
       ),
       
       shiny$mainPanel(
@@ -59,7 +64,7 @@ ui <- function(id) {
         bslib$layout_columns(
           
           shiny$actionButton("start","Tailor my questions"),
-          shiny$actionButton("next","Ask next question"),
+          shiny$actionButton("nextq","Ask next question"),
           shiny$actionButton("finish","Finish")
           
         ),
@@ -72,6 +77,28 @@ ui <- function(id) {
             
           )
           
+        ),
+        
+        bslib$layout_columns(
+          
+          
+          bslib$card(
+            full_screen = TRUE,
+            bslib$card_header("Return")
+          ),
+          
+          bslib$card(
+            full_screen = TRUE,
+            bslib$card_header("Timer")
+            
+          ),
+          
+          bslib$card(
+            full_screen = TRUE,
+            bslib$card_header("Results")
+          )
+          
+                    
         )
         
       )
@@ -107,89 +134,12 @@ Can you hear
 The words that i say
 Can you feel
 The music move you
-Can you feel alive today
-
-Vana dea dzjo vana dea
-La vana do aribedibeda
-Vana dea dzjo vana dea
-La vana do aribeda
-Vana dea dzjo vana dea
-La vana do aribedibeda
-Vana dea dzjo vana dea
-La vana do aribeda
-
-Falledal do
-Falledal dea
-Falledal do
-Falledal da
-Falledaldea
-Ya vana dea ribeda
-
-Can you touch
-The root that feed us
-Can you hear
-The words that i say
-Can you feel
-The music move you
-Can you feel alive today
-
-Vana dea dzjo vana dea
-La vana do aribedibeda
-Vana dea dzjo vana dea
-La vana do aribeda
-Vana dea dzjo vana dea
-La vana do aribedibeda
-Vana dea dzjo vana dea
-La vana do aribeda
-
-Falledal do
-Falledal dea
-Falledal do
-Falledal da
-Falledaldea
-Ya vana dea ribeda
-
-Can you touch
-The root that feed us
-Can you hear
-The words that i say
-Can you feel
-The music move you
-Can you feel alive today
-
-Can you feel alive
-Can you feel alive
-Can you feel alive
-
-Strong like the grass
-Tall like a tree
-Free like the wind
-Eternally
-Nothing to lose
-Nothing to gain
-Just running wyld
-Again and again and again
-
-Can you touch
-The root that feed us
-Can you hear
-The words that i say
-Can you feel
-The music move you
-Can you feel alive today
-
-Falledal do
-Falledal dea
-Falledal do
-Falledal da
-Falledaldea
-Ya vana dea ribeda
-
-Bumblebees and blossom
-Only trees and me
-Humble bees and blossom
-Only trees and me"
+Can you feel alive today"
       
     })
+    
+    timer$server("timerid",timespan = input$settime, start_button = input$start,
+                 next_button = input$nextq,finish_button = input$finish)
+    
   })
 }
