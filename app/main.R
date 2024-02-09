@@ -8,6 +8,7 @@ box::use(
   app/view/itvw_type,
   app/view/text_input,
   app/view/timer,
+  app/view/llm_action,
 )
 
 #' @export
@@ -24,9 +25,15 @@ ui <- function(id) {
           "Bard key",
           "insert your bard key"
         ),
-        shiny$numericInput('settime','Seconds:',value=10,min=0,max=180,step=1),
+        shiny$numericInput(ns('settime'),'Seconds:',value=180,min=0,max=180,step=1),
         
-      bslib$card()  
+      bslib$card(
+        
+        full_screen = FALSE,
+        bslib$card_header("Directions"),
+        shiny$HTML("Maximize your interview impact in just 3 minutes. 'interviewpro.ai' guides you to concise and compelling self-presentation. Perfect your pitch with us.")
+        
+      )  
       ),
       
       shiny$mainPanel(
@@ -63,9 +70,9 @@ ui <- function(id) {
         
         bslib$layout_columns(
           
-          shiny$actionButton("start","Tailor my questions"),
-          shiny$actionButton("nextq","Ask next question"),
-          shiny$actionButton("finish","Finish")
+          shiny$actionButton(ns("start"),"Tailor my questions"),
+          shiny$actionButton(ns("nextq"),"Ask next question"),
+          shiny$actionButton(ns("finish"),"Finish")
           
         ),
         
@@ -73,7 +80,7 @@ ui <- function(id) {
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("your awesome output"),
-            shiny$HTML(ns("message"))
+            shiny$uiOutput("output_ai")
             
           )
           
@@ -89,7 +96,9 @@ ui <- function(id) {
           
           bslib$card(
             full_screen = TRUE,
-            bslib$card_header("Timer")
+            bslib$card_header("Timer"),
+            shiny$imageOutput("circle_time"),
+            timer$ui(ns("timerid"))
             
           ),
           
@@ -112,34 +121,21 @@ ui <- function(id) {
 #' @export
 server <- function(id) {
   shiny$moduleServer(id, function(input, output, session) {
-    output$message <- shiny$renderText({
-      
-      "Alive!
-Omnia
-
-Allive!
-Omnia
-Hot like the sun
-Wet like the rain
-Green like the leaves
-Life is a game
-Stars in my head
-Shine moon shine
-Everything's cool
-And I feel fine
-
-Can you touch
-The root that feed us
-Can you hear
-The words that i say
-Can you feel
-The music move you
-Can you feel alive today"
-      
-    })
+    
+    output$output_ai <- llm_action$server("out_ai",input$start,input$key,input$position,
+                      input$job_desc,input$company,input$experience,input$itvw_type)
+    
     
     timer$server("timerid",timespan = input$settime, start_button = input$start,
                  next_button = input$nextq,finish_button = input$finish)
+    
+    output$circle_time <- shiny$renderImage({
+      
+      list(src = "app/img/Green_circle_3_4.png")
+      
+    }, deleteFile = F)
+    
+    
     
   })
 }
