@@ -122,12 +122,16 @@ ui <- function(id) {
 server <- function(id) {
   shiny$moduleServer(id, function(input, output, session) {
     
-    output$output_ai <- llm_action$server("out_ai",input$start,input$key,input$position,
+    startButtonClick <- shiny$reactive({ input$start })
+    finishButtonClick <- shiny$reactive({ input$finish })
+    
+    
+    output$output_ai <- llm_action$server("out_ai",startButtonClick,input$key,input$position,
                       input$job_desc,input$company,input$experience,input$itvw_type)
     
     
-    timer$server("timerid",timespan = input$settime, start_button = input$start,
-                 next_button = input$nextq,finish_button = input$finish)
+    timer$server("timerid",timespan = input$settime, start_button = startButtonClick,
+                 next_button = input$nextq,finish_button = finishButtonClick)
     
     output$circle_time <- shiny$renderImage({
       
