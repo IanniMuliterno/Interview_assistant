@@ -15,7 +15,7 @@ box::use(
 ui <- function(id) {
   ns <- shiny$NS(id)
   shiny$fluidPage(
-    theme = bslib$bs_theme(bootswatch = "darkly"),
+    theme = bslib$bs_theme(),
     
     shiny$sidebarLayout(
       
@@ -120,6 +120,9 @@ ui <- function(id) {
 
 #' @export
 server <- function(id) {
+  
+  bslib::bs_themer()
+  
   shiny$moduleServer(id, function(input, output, session) {
     
     startButtonClick <- shiny$reactive({ input$start })
