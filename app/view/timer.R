@@ -47,11 +47,11 @@ server <- function(id,timespan,start_button,next_button,finish_button) {
       })
       
       # observers for actionbuttons
-      observeEvent(start_button, {active(TRUE)})
+      observeEvent(start_button(), {active(TRUE)})
       
-      observeEvent(finish_button, {active(FALSE)})
+      observeEvent(finish_button(), {active(FALSE)})
       
-      observeEvent(next_button, {
+      observeEvent(next_button(), {
         timer(timespan)
         active(TRUE)
         })
