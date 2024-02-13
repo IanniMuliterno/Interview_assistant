@@ -8,7 +8,7 @@ box::use(
   app/view/itvw_type,
   app/view/text_input,
   app/view/timer,
-  app/view/llm_action,
+  app/view/llm_action2,
 )
 
 #' @export
@@ -80,7 +80,7 @@ ui <- function(id) {
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("your awesome output"),
-            shiny$uiOutput("output_ai")
+            llm_action2$ui(ns("out_ai"))
             
           )
           
@@ -97,7 +97,7 @@ ui <- function(id) {
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("Timer"),
-            shiny$imageOutput("circle_time"),
+           # shiny$imageOutput(ns("circle_time")),
             timer$ui(ns("timerid"))
             
           ),
@@ -123,21 +123,28 @@ server <- function(id) {
   shiny$moduleServer(id, function(input, output, session) {
     
     startButtonClick <- shiny$reactive({ input$start })
+    nextButtonClick <- shiny$reactive({ input$nextq })
     finishButtonClick <- shiny$reactive({ input$finish })
     
+    position <- text_input$server("position")
+    job_desc <- text_input$server("job_desc")
+    company <- text_input$server("company")
+    experience <- text_input$server("experience")
+    key <- text_input$server("key")
+    type <- itvw_type$server("itvw_type")
     
-    output$output_ai <- llm_action$server("out_ai",startButtonClick,input$key,input$position,
-                      input$job_desc,input$company,input$experience,input$itvw_type)
+    
+  llm_action2$server("out_ai",startButtonClick, key, position, job_desc, company, experience, type)
     
     
     timer$server("timerid",timespan = input$settime, start_button = startButtonClick,
-                 next_button = input$nextq,finish_button = finishButtonClick)
+                 next_button = nextButtonClick,finish_button = finishButtonClick)
     
-    output$circle_time <- shiny$renderImage({
-      
-      list(src = "app/img/Green_circle_3_4.png")
-      
-    }, deleteFile = F)
+    # output$circle_time <- shiny$renderImage({
+    #   
+    #   list(src = "app/img/Green_circle_3_4.png")
+    #   
+    # }, deleteFile = F)
     
     
     

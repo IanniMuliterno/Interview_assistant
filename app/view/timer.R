@@ -51,7 +51,7 @@ server <- function(id,timespan,start_button,next_button,finish_button) {
       
       observeEvent(finish_button(), {active(FALSE)})
       
-      observeEvent(next_button, {
+      observeEvent(next_button(), {
         timer(timespan)
         active(TRUE)
         })
