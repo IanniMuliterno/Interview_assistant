@@ -14,3 +14,15 @@ ui <- function(id,input_title,choice_list) {
 }
 
 
+server <- function(id) {
+  
+  moduleServer(id,
+               
+               module = function(input,output,session) {
+                 
+                 textValue <- reactive({ input$input_text })
+                 
+                 return(list(value = textValue))
+                 
+               })
+}

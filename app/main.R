@@ -133,11 +133,12 @@ server <- function(id) {
     job_desc <- text_input$server("job_desc")
     company <- text_input$server("company")
     experience <- text_input$server("experience")
+    type <- itvw_type$server("itvw_type")
     
      
   llm_action2$server("out_ai",startButtonClick,key,
                      position,job_desc,company,
-                     "HR",experience)
+                     type,experience)
     
     
     timer$server("timerid",timespan = input$settime, start_button = startButtonClick,
