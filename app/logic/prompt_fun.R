@@ -13,7 +13,7 @@ prompt_gen <- function(position,desc,company,interview_type,exp) {
     " and here is my interview pitch '",
     exp,
     "'. if you find that my pitch is not aligned with the position, make a research and give me advice on how to update for better fit. 
-    Always enumerate the questions and include your adive in the 'X awesome advice X' section. Print in HTML")
+    Always enumerate the questions and include your advive in the 'X awesome advice X' section. Print in a way that looks good in the textOutput function from shiny")
 
     return(prompt)
 
