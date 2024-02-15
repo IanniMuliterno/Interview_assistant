@@ -19,15 +19,15 @@ server <- function(id,timespan,start_button,next_button,finish_button) {
     id = id,
     module = function(input,output,session) {
       
-      # Initialize the timer, 10 seconds, not active.
+      
       timer <- reactiveVal(180)
       active <- reactiveVal(FALSE)
-      # Output the time left.
+      
       output$output_text <- renderText({
   
         paste("Time left: ", seconds_to_period(timer()))
       })
-      # observer that invalidates every second. If timer is active, decrease by one.
+      
       observe({
         invalidateLater(1000, session)
         isolate({
@@ -46,7 +46,7 @@ server <- function(id,timespan,start_button,next_button,finish_button) {
         })
       })
       
-      # observers for actionbuttons
+      
       observeEvent(start_button(), {active(TRUE)})
       
       observeEvent(finish_button(), {active(FALSE)})
@@ -57,7 +57,7 @@ server <- function(id,timespan,start_button,next_button,finish_button) {
         })
       
       
-      #return(input_result)
+      
       
     }
   )    

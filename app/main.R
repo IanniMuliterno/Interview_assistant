@@ -136,8 +136,8 @@ server <- function(id) {
     type <- itvw_type$server("itvw_type")
     
      
-  llm_action2$server("out_ai",startButtonClick,key,
-                     position,job_desc,company,
+  llm_action2$server("out_ai",startButtonClick,nextButtonClick,
+                     key, position,job_desc,company,
                      type,experience)
     
     
