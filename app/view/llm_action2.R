@@ -1,5 +1,5 @@
 box::use(
-  shiny[NS,selectInput,moduleServer,reactive,textOutput,renderText,reactiveVal,eventReactive,observe,invalidateLater,isolate],
+  shiny[NS,selectInput,moduleServer,reactive,textOutput,renderText,reactiveVal,eventReactive,observe,invalidateLater],
   lubridate[seconds_to_period],
 )
 
@@ -24,21 +24,24 @@ server <- function(id, start_button, your_key, position_input, desc_input, compa
   moduleServer(id, function(input, output, session) {
 
     
-    # Use `observeEvent` to listen for the start button and set `active` to TRUE
+  
     result_ai <- eventReactive(start_button(), {
-      combinedPrompt <- prompt_fun$prompt_gen(position_input(), desc_input(), company_input(), type_input(), exp_input())
-      
+
+      #combinedPrompt <- prompt_fun$prompt_gen(position_input, desc_input, company_input, type_input, exp_input)
+      combinedPrompt <- prompt_fun$prompt_gen(position_input$value(), desc_input$value(), company_input$value(),
+                            type_input$value(), exp_input$value())
+
       shiny::showNotification(combinedPrompt)
-      # Assuming API_connection$your_llm returns a value or text
-      API_connection$your_llm(prompt = combinedPrompt, your_bard_key = your_key())
+
+      #API_connection$your_llm(prompt = combinedPrompt, your_bard_key = your_key())
     })
-    
-    
-    output$output_text <- renderText({
-     
-      result_ai()
-      
-    })
+
+
+    # output$output_text <- renderText({
+    # 
+    #   result_ai()
+    # 
+    # })
   })
 }
 

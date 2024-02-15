@@ -120,7 +120,6 @@ ui <- function(id) {
 
 #' @export
 server <- function(id) {
-  
   bslib::bs_themer()
   
   shiny$moduleServer(id, function(input, output, session) {
@@ -129,15 +128,16 @@ server <- function(id) {
     nextButtonClick <- shiny$reactive({ input$nextq })
     finishButtonClick <- shiny$reactive({ input$finish })
     
+    key <- text_input$server("key")
     position <- text_input$server("position")
     job_desc <- text_input$server("job_desc")
     company <- text_input$server("company")
     experience <- text_input$server("experience")
-    key <- text_input$server("key")
-    type <- itvw_type$server("itvw_type")
     
-    
-  llm_action2$server("out_ai",startButtonClick, key, position, job_desc, company, experience, type)
+     
+  llm_action2$server("out_ai",startButtonClick,key,
+                     position,job_desc,company,
+                     "HR",experience)
     
     
     timer$server("timerid",timespan = input$settime, start_button = startButtonClick,
