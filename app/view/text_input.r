@@ -1,24 +1,26 @@
 box::use(
-    shiny[NS,selectInput,moduleServer,reactive,textInput,renderText,req],
+  shiny[NS, selectInput, moduleServer, reactive, textInput, renderText, req],
 )
 
-#' @export 
-ui <- function(id,input_title,placeholder) {
-    ns <- NS(id)
-    
-      textInput(ns("input_text"),
-                  label = input_title,
-                  placeholder = placeholder)
+#' @export
+ui <- function(id, input_title, placeholder) {
+  ns <- NS(id)
+
+  textInput(ns("input_text"),
+    label = input_title,
+    placeholder = placeholder
+  )
 }
 
 
 
-#' @export 
+#' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    
-    textValue <- reactive({ input$input_text })
-    
+    textValue <- reactive({
+      input$input_text
+    })
+
     return(list(value = textValue))
   })
 }

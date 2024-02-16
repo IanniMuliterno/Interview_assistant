@@ -10,7 +10,6 @@ your_llm <- function(prompt,
                      max_output_tokens = 1024,
                      your_bard_key,
                      model = "gemini-pro") {
-
   model_query <- paste0(model, ":generateContent")
 
   response <- httr$POST(
@@ -36,5 +35,4 @@ your_llm <- function(prompt,
   candidates <- httr$content(response)$candidates
   outputs <- unlist(lapply(candidates, function(candidate) candidate$content$parts))
   return(outputs)
-
 }
