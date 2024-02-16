@@ -1,5 +1,5 @@
 box::use(
-  shiny[NS,selectInput,moduleServer,reactive,textOutput,renderText,reactiveVal,observeEvent,observe,invalidateLater,isolate],
+  shiny[NS,req,selectInput,moduleServer,reactive,textOutput,renderText,reactiveVal,observeEvent,observe,invalidateLater,showModal,modalDialog],
   lubridate[seconds_to_period],
 )
 
@@ -14,53 +14,43 @@ ui <- function(id) {
 
 
 #' @export 
-server <- function(id,timespan,start_button,next_button,finish_button) {
-  moduleServer(
-    id = id,
-    module = function(input,output,session) {
-      
-      
-      timer <- reactiveVal(180)
-      active <- reactiveVal(FALSE)
-      
-      output$output_text <- renderText({
-  
-        paste("Time left: ", seconds_to_period(timer()))
-      })
-      
-      observe({
+server <- function(id, timespan, start_button, next_button, finish_button) {
+  moduleServer(id, function(input, output, session) {
+    
+    timer <- reactiveVal(180)
+    active <- reactiveVal(FALSE)
+    
+    observeEvent(start_button(), {
+      timer(timespan()) # Initialize with timespan at start
+      active(TRUE)
+    })
+    
+    # observeEvent(next_button(), {
+    #   # Reinitialize timer without changing active status
+    #   timer(timespan())
+    # })
+    
+    observeEvent(finish_button(), {
+      active(FALSE) # Stop the timer
+    })
+    
+    
+    observe({
+      if (active()) {
         invalidateLater(1000, session)
-        isolate({
-          if(active())
-          {
-            timer(timer()-1)
-            if(timer()<1)
-            {
-              active(FALSE)
-              showModal(modalDialog(
-                title = "Important message",
-                "Countdown completed!"
-              ))
-            }
-          }
-        })
-      })
-      
-      
-      observeEvent(start_button(), {active(TRUE)})
-      
-      observeEvent(finish_button(), {active(FALSE)})
-      
-      observeEvent(next_button(), {
-        timer(timespan)
-        active(TRUE)
-        })
-      
-      
-      
-      
-    }
-  )    
-  
-  
+        timer(timer() - 1) # Decrement timer
+        if (timer() <= 0) {
+          active(FALSE)
+          showModal(modalDialog(
+            title = "Important message",
+            "Countdown completed!"
+          ))
+        }
+      }
+    })
+    
+    output$output_text <- renderText({
+      paste("Time left: ", seconds_to_period(timer()))
+    })
+  })
 }

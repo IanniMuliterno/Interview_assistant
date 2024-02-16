@@ -1,0 +1,12 @@
+name: shiny_interview_assistant
+title: shiny_interview_assistant
+username: ianmuliterno
+account: ianmuliterno
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11243821
+bundleId: 8261741
+url: https://ianmuliterno.shinyapps.io/shiny_interview_assistant/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

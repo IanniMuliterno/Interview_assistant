@@ -31,7 +31,8 @@ ui <- function(id) {
         
         full_screen = FALSE,
         bslib$card_header("Directions"),
-        shiny$HTML("Maximize your interview impact in just 3 minutes. 'interviewpro.ai' guides you to concise and compelling self-presentation. Perfect your pitch with us.")
+        shiny$HTML("Maximize your interview impact. Everything you need is to generate a bard key and 'interviewpro.ai' will guide you to concise and compelling self-presentation.
+                   <p>Find your own Bard API by following the instructions here: <a href='https://www.cloudbooklet.com/ai-text/googles-bard-api-key/' target='_blank'>https://www.cloudbooklet.com/ai-text/googles-bard-api-key/</a></p>")
         
       )  
       ),
@@ -79,7 +80,7 @@ ui <- function(id) {
         bslib$layout_columns(
           bslib$card(
             full_screen = TRUE,
-            bslib$card_header("your awesome output"),
+            bslib$card_header("Your customized questions"),
             llm_action2$ui(ns("out_ai"))
             
           )
@@ -139,9 +140,11 @@ server <- function(id) {
   llm_action2$server("out_ai",startButtonClick,nextButtonClick,
                      key, position,job_desc,company,
                      type,experience)
+  
+  timespanReactive <- shiny$reactive({ input$settime })
+  
     
-    
-    timer$server("timerid",timespan = input$settime, start_button = startButtonClick,
+  timer$server("timerid",timespan = timespanReactive, start_button = startButtonClick,
                  next_button = nextButtonClick,finish_button = finishButtonClick)
     
     # output$circle_time <- shiny$renderImage({

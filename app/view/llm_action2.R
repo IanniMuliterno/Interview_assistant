@@ -69,7 +69,7 @@ server <- function(id, start_button,next_button, your_key, position_input, desc_
         
         fixed_title <- paste(questionList[1],
                              "\n\n",
-                             "you have",length(questionList[[1]]) - 2, "questions \n\n")
+                             "you have",length(questionList) - 2, "questions \n\n")
         
         
         final_result <- paste(fixed_title, questionList[currentQuestionIndex() + 1])
