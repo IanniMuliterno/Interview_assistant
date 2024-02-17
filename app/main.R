@@ -78,7 +78,6 @@ ui <- function(id) {
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("Timer"),
-            # shiny$imageOutput(ns("circle_time")),
             timer$ui(ns("timerid"))
           ),
           bslib$card(
@@ -130,10 +129,6 @@ server <- function(id) {
       next_button = nextButtonClick, finish_button = finishButtonClick
     )
 
-    # output$circle_time <- shiny$renderImage({
-    #
-    #   list(src = "app/img/Green_circle_3_4.png")
-    #
-    # }, deleteFile = F)
+   
   })
 }

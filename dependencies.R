@@ -2,7 +2,7 @@
 library(rhino)
 library(dplyr)
 library(tidyr)
-library(echarts4r)
+library(lubridate)
 library(htmlwidgets)
 library(mscstts)
 library(httr)
