@@ -14,7 +14,7 @@ box::use(
 ui <- function(id) {
   ns <- shiny$NS(id)
   shiny$fluidPage(
-    theme = bslib$bs_theme(),
+    theme = bslib$bs_theme(preset = "morph"),
     shiny$sidebarLayout(
       shiny$sidebarPanel(
         text_input$ui(
@@ -96,7 +96,6 @@ ui <- function(id) {
 
 #' @export
 server <- function(id) {
-  bslib$bs_themer()
 
   shiny$moduleServer(id, function(input, output, session) {
     start_button <- shiny$reactive({
@@ -118,7 +117,7 @@ server <- function(id) {
 
 
     llm_action2$server(
-      "out_ai", startButtonClick, nextButtonClick,
+      "out_ai", start_button, next_button,
       key, position, job_desc, company,
       type, experience
     )

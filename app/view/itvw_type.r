@@ -14,7 +14,7 @@ ui <- function(id, input_title, choice_list) {
   )
 }
 
-
+#' @export
 server <- function(id) {
   moduleServer(id,
     module = function(input, output, session) {

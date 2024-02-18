@@ -21,6 +21,6 @@ server <- function(id) {
       input$input_text
     })
 
-    return(list(value = textValue))
+    return(list(value = text_value))
   })
 }
