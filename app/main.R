@@ -26,8 +26,12 @@ ui <- function(id) {
         bslib$card(
           full_screen = FALSE,
           bslib$card_header("Directions"),
-          shiny$HTML("Maximize your interview impact. Everything you need is to generate a bard key and 'interviewpro.ai' will guide you to concise and compelling self-presentation.
-                   <p>Find your own Bard API by following the instructions here: <a href='https://www.cloudbooklet.com/ai-text/googles-bard-api-key/' target='_blank'>https://www.cloudbooklet.com/ai-text/googles-bard-api-key/</a></p>")
+          shiny$HTML("Maximize your interview impact. Everything you need is to generate a bard key
+                     and 'interviewpro' will guide you to concise and compelling self-presentation.
+                   <p>Find your own Bard API by following the instructions here: <a 
+                   href='https://www.cloudbooklet.com/ai-text/googles-bard-api-key/'
+                   target='_blank'>
+                   https://www.cloudbooklet.com/ai-text/googles-bard-api-key/</a></p>")
         )
       ),
       shiny$mainPanel(
@@ -92,16 +96,16 @@ ui <- function(id) {
 
 #' @export
 server <- function(id) {
-  bslib::bs_themer()
+  bslib$bs_themer()
 
   shiny$moduleServer(id, function(input, output, session) {
-    startButtonClick <- shiny$reactive({
+    start_button <- shiny$reactive({
       input$start
     })
-    nextButtonClick <- shiny$reactive({
+    next_button <- shiny$reactive({
       input$nextq
     })
-    finishButtonClick <- shiny$reactive({
+    finish_button <- shiny$reactive({
       input$finish
     })
 
@@ -119,16 +123,15 @@ server <- function(id) {
       type, experience
     )
 
-    timespanReactive <- shiny$reactive({
+    timespan_reactive <- shiny$reactive({
       input$settime
     })
 
 
     timer$server("timerid",
-      timespan = timespanReactive, start_button = startButtonClick,
-      next_button = nextButtonClick, finish_button = finishButtonClick
+      timespan = timespan_reactive, start_button = start_button,
+      next_button = next_button, finish_button = finish_button
     )
 
-   
   })
 }

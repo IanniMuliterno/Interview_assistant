@@ -1,5 +1,6 @@
 box::use(
-  shiny[NS, req, selectInput, moduleServer, reactive, textOutput, renderText, reactiveVal, observeEvent, observe, invalidateLater, showModal, modalDialog],
+  shiny[NS, req, selectInput, moduleServer, reactive, textOutput, renderText,
+        reactiveVal, observeEvent, observe, invalidateLater, showModal, modalDialog],
   lubridate[seconds_to_period],
 )
 
@@ -24,10 +25,6 @@ server <- function(id, timespan, start_button, next_button, finish_button) {
       active(TRUE)
     })
 
-    # observeEvent(next_button(), {
-    #   # Reinitialize timer without changing active status
-    #   timer(timespan())
-    # })
 
     observeEvent(finish_button(), {
       active(FALSE) # Stop the timer

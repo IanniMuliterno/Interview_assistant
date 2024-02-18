@@ -8,8 +8,8 @@ ui <- function(id, input_title, choice_list) {
 
   selectInput(ns("input_text"),
     input_title,
-    multiple = F,
-    selectize = T,
+    multiple = FALSE,
+    selectize = TRUE,
     choices = choice_list
   )
 }
@@ -18,11 +18,11 @@ ui <- function(id, input_title, choice_list) {
 server <- function(id) {
   moduleServer(id,
     module = function(input, output, session) {
-      textValue <- reactive({
+      text_value <- reactive({
         input$input_text
       })
 
-      return(list(value = textValue))
+      return(list(value = text_value))
     }
   )
 }

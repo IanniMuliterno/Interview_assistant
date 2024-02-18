@@ -1,5 +1,6 @@
 box::use(
-  shiny[NS, HTML, selectInput, moduleServer, reactive, uiOutput, renderUI, reactiveVal, eventReactive, observeEvent, observe, invalidateLater],
+  shiny[NS, HTML, selectInput, moduleServer, reactive, uiOutput, renderUI,
+        reactiveVal, eventReactive, observeEvent, observe, invalidateLater],
   lubridate[seconds_to_period],
   stringr[str_split],
   markdown[markdownToHTML]
@@ -7,7 +8,7 @@ box::use(
 
 box::use(
   app / logic / prompt_fun,
-  app / logic / API_connection,
+  app / logic / api_connection,
 )
 
 
@@ -22,36 +23,36 @@ ui <- function(id) {
 
 
 #' @export
-server <- function(id, start_button, next_button, your_key, position_input, desc_input, company_input, type_input, exp_input) {
+server <- function(id, start_button, next_button, your_key, position_input, desc_input,
+                   company_input, type_input, exp_input) {
   moduleServer(id, function(input, output, session) {
-    currentQuestionIndex <- reactiveVal(1)
+    current_question_index <- reactiveVal(1)
 
     questions <- eventReactive(start_button(), {
-      combinedPrompt <- prompt_fun$prompt_gen(
+      combined_prompt <- prompt_fun$prompt_gen(
         position_input$value(), desc_input$value(), company_input$value(),
         type_input$value(), exp_input$value()
       )
 
-      # shiny::showNotification(combinedPrompt)
+      api_output <- api_connection$your_llm(prompt = combined_prompt,
+                                            your_bard_key = your_key$value())
 
-      API_output <- API_connection$your_llm(prompt = combinedPrompt, your_bard_key = your_key$value())
-
-      result <- str_split(API_output, "[0-9]\\.|\\*\\*X Awesome Advice X\\*\\*")
+      result <- str_split(api_output, "[0-9]\\.|\\*\\*X Awesome Advice X\\*\\*")
 
       result[[1]]
     })
 
     observeEvent(next_button(), {
-      if (currentQuestionIndex() < (length(questions()) - 1)) {
-        currentQuestionIndex(currentQuestionIndex() + 1)
+      if (current_question_index() < (length(questions()) - 1)) {
+        current_question_index(current_question_index() + 1)
       } else {
-        currentQuestionIndex(1)
+        current_question_index(1)
       }
     })
 
 
     output$output_text <- renderUI({
-      questionList <- questions()
+      question_list <- questions()
       if (is.null(questionList) || length(questionList) == 0) {
         return()
       } else {
@@ -62,7 +63,7 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
         )
 
 
-        final_result <- paste(fixed_title, questionList[currentQuestionIndex() + 1])
+        final_result <- paste(fixed_title, questionList[current_question_index() + 1])
 
 
         HTML(markdownToHTML(text = final_result, fragment.only = TRUE))

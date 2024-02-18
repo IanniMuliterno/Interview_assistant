@@ -17,7 +17,7 @@ ui <- function(id, input_title, placeholder) {
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    textValue <- reactive({
+    text_value <- reactive({
       input$input_text
     })
 
