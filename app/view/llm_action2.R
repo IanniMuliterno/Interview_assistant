@@ -1,6 +1,6 @@
 box::use(
   shiny[NS, HTML, selectInput, moduleServer, reactive, uiOutput, renderUI,
-        reactiveVal, eventReactive, observeEvent, observe, invalidateLater],
+        reactiveVal, eventReactive, observeEvent, observe, invalidateLater,req],
   lubridate[seconds_to_period],
   stringr[str_split],
   markdown[markdownToHTML]
@@ -39,7 +39,7 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
 
       result <- str_split(api_output, "[0-9]\\.|\\*\\*X Awesome Advice X\\*\\*")
 
-      result[[1]]
+      return(result[[1]])
     })
 
     observeEvent(next_button(), {
@@ -52,18 +52,19 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
 
 
     output$output_text <- renderUI({
+      req(questions())
       question_list <- questions()
-      if (is.null(questionList) || length(questionList) == 0) {
+      if (is.null(question_list) || length(question_list) == 0) {
         return()
       } else {
         fixed_title <- paste(
-          questionList[1],
+          question_list[1],
           "\n\n",
-          "you have", length(questionList) - 2, "questions \n\n"
+          "you have", length(question_list) - 2, "questions \n\n"
         )
 
 
-        final_result <- paste(fixed_title, questionList[current_question_index() + 1])
+        final_result <- paste(fixed_title, question_list[current_question_index() + 1])
 
 
         HTML(markdownToHTML(text = final_result, fragment.only = TRUE))
