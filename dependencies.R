@@ -7,4 +7,5 @@ library(htmlwidgets)
 library(mscstts)
 library(httr)
 library(jsonlite)
+library(markdown)
 
