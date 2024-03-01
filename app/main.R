@@ -33,7 +33,9 @@ ui <- function(id) {
                    href='https://www.cloudbooklet.com/ai-text/googles-bard-api-key/'
                    target='_blank'>
                    https://www.cloudbooklet.com/ai-text/googles-bard-api-key/</a></p>")
-        )
+        ),
+        timer$ui(ns("timerid")),
+        shiny$actionButton(ns("download"), "Download")
       ),
       shiny$mainPanel(
         bslib$layout_columns(
@@ -76,13 +78,7 @@ ui <- function(id) {
           )
         ),
         bslib$layout_columns(
-          col_widths = c(3,9),
 
-          bslib$card(
-            full_screen = TRUE,
-            bslib$card_header("Timer"),
-            timer$ui(ns("timerid"))
-          ),
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("Results"),

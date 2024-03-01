@@ -18,7 +18,6 @@ server <- function(id,hist_df) {
       output$histogram <- renderEcharts4r( {
         
         df <- hist_df()
-        print(df)
         if(nrow(df) > 1) {
           
           df |> 
