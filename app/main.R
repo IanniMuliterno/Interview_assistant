@@ -77,9 +77,6 @@ ui <- function(id) {
         bslib$layout_columns(
           bslib$card(
             full_screen = TRUE,
-            bslib$card_header("Return"),
-            "the plan for this card is to offer a button so you can download the output"
-          ),
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("Timer"),
