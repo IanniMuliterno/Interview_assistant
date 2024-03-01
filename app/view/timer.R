@@ -2,6 +2,7 @@ box::use(
   shiny[NS, req, selectInput, moduleServer, reactive, textOutput, renderText,
         reactiveVal, observeEvent, observe, invalidateLater, showModal, modalDialog,isolate],
   lubridate[seconds_to_period],
+  dplyr[bind_rows],
 )
 
 #' @export
@@ -17,7 +18,11 @@ ui <- function(id) {
 #' @export
 server <- function(id, timespan, start_button, next_button, finish_button) {
   moduleServer(id, function(input, output, session) {
+  
+    hist_df <- reactiveVal(data.frame(time_spent = numeric()))
+    
     timer <- reactiveVal()
+    timer2 <- reactiveVal(0)
     active <- reactiveVal(FALSE)
     
     
@@ -40,11 +45,10 @@ server <- function(id, timespan, start_button, next_button, finish_button) {
             
           } else {
             active(FALSE)
-            showModal(modalDialog(
-              title = "Important message",
-              "Countdown completed!"
-            ))
+
           }
+          
+          timer2(timer2() + 1)
         }
         
       })
@@ -53,18 +57,33 @@ server <- function(id, timespan, start_button, next_button, finish_button) {
 
     observeEvent(start_button(), {
       timer(timespan())
+      timer2(0)
       active(TRUE)
     })
     
     
     observeEvent(finish_button(), {
-      active(FALSE) # Stop the timer
+      active(FALSE) 
     })
     
     observeEvent(next_button(), {
       timer(timespan())
       active(TRUE)
+      
+      current_df <- hist_df()
+      hist_df(
+        bind_rows(
+          current_df,data.frame(
+            time_spent = timer2()
+          )
+        )
+      )
+      
+      timer2(0)
+      print(hist_df())
     })
+    
+    return(hist_df)
     
   })
 }
