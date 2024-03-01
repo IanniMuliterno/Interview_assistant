@@ -75,8 +75,8 @@ ui <- function(id) {
           )
         ),
         bslib$layout_columns(
-          bslib$card(
-            full_screen = TRUE,
+          col_widths = c(3,9),
+
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("Timer"),
