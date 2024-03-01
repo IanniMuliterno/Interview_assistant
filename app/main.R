@@ -8,6 +8,7 @@ box::use(
   app / view / text_input,
   app / view / timer,
   app / view / llm_action2,
+  app / view / histogram,
 )
 
 #' @export
@@ -85,7 +86,7 @@ ui <- function(id) {
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("Results"),
-            "the plan for this card is to show a histogram of the time you took to answer each question"
+            histogram$ui(ns("hist"))
           )
         )
       )
@@ -126,10 +127,13 @@ server <- function(id) {
     })
 
 
-    timer$server("timerid",
+    time_spent_df <- timer$server("timerid",
       timespan = timespan_reactive, start_button = start_button,
       next_button = next_button, finish_button = finish_button
     )
+    
+    
+    histogram$server("hist",hist_df = time_spent_df)
 
   })
 }

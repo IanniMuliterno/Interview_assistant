@@ -80,7 +80,6 @@ server <- function(id, timespan, start_button, next_button, finish_button) {
       )
       
       timer2(0)
-      print(hist_df())
     })
     
     return(hist_df)
