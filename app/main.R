@@ -34,7 +34,9 @@ ui <- function(id) {
                    target='_blank'>
                    https://www.cloudbooklet.com/ai-text/googles-bard-api-key/</a></p>")
         ),
-        timer$ui(ns("timerid")),
+        bslib$card(
+        timer$ui(ns("timerid"))
+        ),
         shiny$actionButton(ns("download"), "Download")
       ),
       shiny$mainPanel(
