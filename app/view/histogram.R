@@ -1,6 +1,6 @@
 box::use(
   shiny[NS,moduleServer],
-  echarts4r[e_histogram,e_charts,renderEcharts4r,echarts4rOutput,e_tooltip],
+  echarts4r[e_histogram,e_legend,e_title,e_charts,renderEcharts4r,echarts4rOutput,e_tooltip],
   
 )
 
