@@ -1,6 +1,7 @@
 box::use(
   shiny,
   bslib,
+  shinyjs,
 )
 
 box::use(
@@ -14,7 +15,9 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- shiny$NS(id)
+  
   shiny$fluidPage(
+    shinyjs$useShinyjs(),
     theme = bslib$bs_theme(preset = "morph"),
     shiny$sidebarLayout(
       shiny$sidebarPanel(
@@ -23,7 +26,7 @@ ui <- function(id) {
           "Bard key",
           "insert your bard key"
         ),
-        shiny$numericInput(ns("settime"), "Seconds:", value = 180, min = 0, max = 180, step = 1),
+        shiny$numericInput(ns("settime"), "Seconds:", value = 180, min = 0, max = 240, step = 1),
         bslib$card(
           full_screen = FALSE,
           bslib$card_header("Directions"),
@@ -37,13 +40,17 @@ ui <- function(id) {
         bslib$card(
         timer$ui(ns("timerid"))
         ),
-        shiny$actionButton(ns("download"), "Download")
+        bslib$card(
+          shinyjs$disabled(shiny$actionButton(ns("download"), "Download content")),
+          shinyjs$disabled(shiny$actionButton(ns("download_times"), "Download time table"))
+        )
+        
       ),
       shiny$mainPanel(
         bslib$layout_columns(
           itvw_type$ui(
             id = ns("itvw_type"),
-            input_title = "Who is interviewing you",
+            input_title = "Interviewer",
             choice_list = c("HR", "Tech manager")
           ),
           text_input$ui(
@@ -105,6 +112,23 @@ server <- function(id) {
     finish_button <- shiny$reactive({
       input$finish
     })
+    
+    timespan_reactive <- shiny$reactive({
+      input$settime
+    })
+    
+    shiny$observeEvent(input$start,{
+      
+      shinyjs$enable("download")
+      
+    })
+    
+    
+    shiny$observeEvent(input$finish,{
+      
+      shinyjs$enable("download_times")
+      
+    })
 
     key <- text_input$server("key")
     position <- text_input$server("position")
@@ -120,9 +144,7 @@ server <- function(id) {
       type, experience
     )
 
-    timespan_reactive <- shiny$reactive({
-      input$settime
-    })
+
 
 
     time_spent_df <- timer$server("timerid",
