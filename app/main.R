@@ -5,17 +5,17 @@ box::use(
 )
 
 box::use(
-  app / view / itvw_type,
-  app / view / text_input,
-  app / view / timer,
-  app / view / llm_action2,
-  app / view / histogram,
+  app/view/itvw_type,
+  app/view/text_input,
+  app/view/timer,
+  app/view/llm_action2,
+  app/view/histogram,
 )
 
 #' @export
 ui <- function(id) {
   ns <- shiny$NS(id)
-  
+
   shiny$fluidPage(
     shinyjs$useShinyjs(),
     theme = bslib$bs_theme(preset = "morph"),
@@ -32,19 +32,18 @@ ui <- function(id) {
           bslib$card_header("Directions"),
           shiny$HTML("Maximize your interview impact. Everything you need is to generate a bard key
                      and 'interviewpro' will guide you to concise and compelling self-presentation.
-                   <p>Find your own Bard API by following the instructions here: <a 
+                   <p>Find your own Bard API by following the instructions here: <a
                    href='https://www.cloudbooklet.com/ai-text/googles-bard-api-key/'
                    target='_blank'>
                    https://www.cloudbooklet.com/ai-text/googles-bard-api-key/</a></p>")
         ),
         bslib$card(
-        timer$ui(ns("timerid"))
+          timer$ui(ns("timerid"))
         ),
         bslib$card(
           shinyjs$disabled(shiny$actionButton(ns("download"), "Download content")),
           shinyjs$disabled(shiny$actionButton(ns("download_times"), "Download time table"))
         )
-        
       ),
       shiny$mainPanel(
         bslib$layout_columns(
@@ -87,7 +86,6 @@ ui <- function(id) {
           )
         ),
         bslib$layout_columns(
-
           bslib$card(
             full_screen = TRUE,
             bslib$card_header("Results"),
@@ -101,7 +99,6 @@ ui <- function(id) {
 
 #' @export
 server <- function(id) {
-
   shiny$moduleServer(id, function(input, output, session) {
     start_button <- shiny$reactive({
       input$start
@@ -112,22 +109,18 @@ server <- function(id) {
     finish_button <- shiny$reactive({
       input$finish
     })
-    
+
     timespan_reactive <- shiny$reactive({
       input$settime
     })
-    
-    shiny$observeEvent(input$start,{
-      
+
+    shiny$observeEvent(input$start, {
       shinyjs$enable("download")
-      
     })
-    
-    
-    shiny$observeEvent(input$finish,{
-      
+
+
+    shiny$observeEvent(input$finish, {
       shinyjs$enable("download_times")
-      
     })
 
     key <- text_input$server("key")
@@ -151,9 +144,8 @@ server <- function(id) {
       timespan = timespan_reactive, start_button = start_button,
       next_button = next_button, finish_button = finish_button
     )
-    
-    
-    histogram$server("hist",hist_df = time_spent_df)
 
+
+    histogram$server("hist", hist_df = time_spent_df)
   })
 }

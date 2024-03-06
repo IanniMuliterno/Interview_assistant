@@ -1,14 +1,16 @@
 box::use(
-  shiny[NS, HTML, selectInput, moduleServer, reactive, uiOutput, renderUI,
-        reactiveVal, eventReactive, observeEvent, observe, invalidateLater,req],
+  shiny[
+    NS, HTML, selectInput, moduleServer, reactive, uiOutput, renderUI,
+    reactiveVal, eventReactive, observeEvent, observe, invalidateLater, req
+  ],
   lubridate[seconds_to_period],
   stringr[str_split],
   markdown[markdownToHTML]
 )
 
 box::use(
-  app / logic / prompt_fun,
-  app / logic / api_connection,
+  app/logic/prompt_fun,
+  app/logic/api_connection,
 )
 
 
@@ -34,8 +36,10 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
         type_input$value(), exp_input$value()
       )
 
-      api_output <- api_connection$your_llm(prompt = combined_prompt,
-                                            your_bard_key = your_key$value())
+      api_output <- api_connection$your_llm(
+        prompt = combined_prompt,
+        your_bard_key = your_key$value()
+      )
 
       result <- str_split(api_output, "[0-9]\\.|\\*\\*X Awesome Advice X\\*\\*")
 
