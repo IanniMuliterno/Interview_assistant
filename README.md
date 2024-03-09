@@ -10,7 +10,7 @@ InterviewPro is a Shiny app designed to empower tech professionals with effectiv
 - **Feedback Mechanism**: Receive instant feedback on your pitch's clarity, conciseness, and impact.
 - **Customizable Scenarios**: Tailor your practice sessions according to specific job roles and industries.
 
-## (in Progress) Getting Started 
+## Getting Started 
 Clone this repository to your local machine using:
 ```bash
 git clone https://github.com/yourusername/InterviewPro.git
