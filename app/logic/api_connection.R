@@ -11,7 +11,7 @@ your_llm <- function(prompt,
                      your_bard_key,
                      model = "gemini-pro") {
   model_query <- paste0(model, ":generateContent")
-  
+
   response <- httr$POST(
     url = paste0("https://generativelanguage.googleapis.com/v1beta/models/", model_query),
     query = list(key = your_bard_key),
