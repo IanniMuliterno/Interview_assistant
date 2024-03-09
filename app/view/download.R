@@ -1,12 +1,13 @@
 box::use(
-  shiny[actionButton, moduleServer, downloadHandler, NS, observeEvent],
+  shiny[downloadButton, moduleServer, downloadHandler, NS, observeEvent],
   shinyjs[enable, disabled],
   markdown[markdownToHTML],
+  utils[write.csv],
 )
 
 ui <- function(id, title) {
   ns <- NS(id)
-  disabled(actionButton(ns("download"), title))
+  disabled(downloadButton(ns("download"), title))
 }
 
 server <- function(id, data, archive_name, start) {
@@ -19,18 +20,20 @@ server <- function(id, data, archive_name, start) {
 
       output$download <- downloadHandler(
         
-        filename = ifelse(class(data()) == "list",
-          paste0(archive_name, ".html"),
-          paste0(archive_name, ".csv")
-        ),
+        filename = function() {
+          
+          paste(archive_name)
+          
+        },
         content = function(file) {
-          if (class(data()) == "character") {
+          
+          if (grepl(archive_name,"html")) {
+            
             md_text <- paste(data())
             htmlText <- markdownToHTML(text = md_text, fragment.only = TRUE)
             writeLines(htmlText, con = file)
           } else {
-            html_text <- write.csv(data())
-            writeLines(html_text, con = file)
+            write.csv(data(), file)
           }
         }
       )

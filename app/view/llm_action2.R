@@ -42,7 +42,7 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
       )
 
       result <- str_split(api_output, "[0-9]\\.|\\*\\*X Awesome Advice X\\*\\*")
-
+      
       return(result[[1]])
     })
 
@@ -72,7 +72,11 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
 
 
         HTML(markdownToHTML(text = final_result, fragment.only = TRUE))
+
       }
     })
+    
+    return(questions)
+    
   })
 }
