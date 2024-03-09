@@ -5,7 +5,7 @@ account: ianmuliterno
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11252975
-bundleId: 8324303
+bundleId: 8352609
 url: https://ianmuliterno.shinyapps.io/interview_assistant/
 version: 1
 asMultiple: FALSE

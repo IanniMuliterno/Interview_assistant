@@ -9,4 +9,6 @@ library(httr)
 library(jsonlite)
 library(markdown)
 library(echarts4r)
+library(shinyjs)
+library(utils)
 
