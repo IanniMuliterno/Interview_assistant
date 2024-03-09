@@ -19,16 +19,11 @@ server <- function(id, data, archive_name, start) {
       })
 
       output$download <- downloadHandler(
-        
         filename = function() {
-          
           paste(archive_name)
-          
         },
         content = function(file) {
-          
-          if (grepl(archive_name,"html")) {
-            
+          if (class(data()) == "character") {
             md_text <- paste(data())
             htmlText <- markdownToHTML(text = md_text, fragment.only = TRUE)
             writeLines(htmlText, con = file)
