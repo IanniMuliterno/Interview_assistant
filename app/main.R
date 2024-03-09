@@ -6,7 +6,6 @@ box::use(
 
 box::use(
   app/view/itvw_type,
-  #app/logic/api_connection,
   app/view/text_input,
   app/view/timer,
   app/view/llm_action2,
