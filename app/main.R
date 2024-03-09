@@ -43,7 +43,7 @@ ui <- function(id) {
         ),
         bslib$card(
           download$ui(ns("download"), "Download content"),
-          shinyjs$disabled(download$ui(ns("download_times"), "Download time table"))
+          download$ui(ns("download_times"), "Download time table")
         )
       ),
       shiny$mainPanel(
@@ -129,19 +129,16 @@ server <- function(id) {
       key, position, job_desc, company,
       type, experience
     )
-    
+
     time_spent_df <- timer$server("timerid",
-                                  timespan = timespan_reactive, start_button = start_button,
-                                  next_button = next_button, finish_button = finish_button
+      timespan = timespan_reactive, start_button = start_button,
+      next_button = next_button, finish_button = finish_button
     )
-    
-    
+
+
     histogram$server("hist", hist_df = time_spent_df)
 
     download$server("download", data, "questions.html", start_button)
     download$server("download_times", time_spent_df, "timespent.csv", finish_button)
-
-
-
   })
 }
