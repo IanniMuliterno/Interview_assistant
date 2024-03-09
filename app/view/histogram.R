@@ -19,7 +19,7 @@ server <- function(id, hist_df) {
             e_charts() |>
             e_histogram(time_spent, name = "histogram") |>
             e_tooltip(trigger = "axis") |>
-            e_title(("Candlestick chart for opening and closing prices")) |>
+            e_title(("Histogram of time spent by question")) |>
             e_legend(show = FALSE)
         }
       })

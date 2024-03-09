@@ -6,10 +6,12 @@ box::use(
 
 box::use(
   app/view/itvw_type,
+  #app/logic/api_connection,
   app/view/text_input,
   app/view/timer,
   app/view/llm_action2,
   app/view/histogram,
+  app/view/download,
 )
 
 #' @export
@@ -41,8 +43,8 @@ ui <- function(id) {
           timer$ui(ns("timerid"))
         ),
         bslib$card(
-          shinyjs$disabled(shiny$actionButton(ns("download"), "Download content")),
-          shinyjs$disabled(shiny$actionButton(ns("download_times"), "Download time table"))
+          download$ui(ns("download"), "Download content"),
+          shinyjs$disabled(download$ui(ns("download_times"), "Download time table"))
         )
       ),
       shiny$mainPanel(
@@ -86,11 +88,7 @@ ui <- function(id) {
           )
         ),
         bslib$layout_columns(
-          bslib$card(
-            full_screen = TRUE,
-            bslib$card_header("Results"),
-            histogram$ui(ns("hist"))
-          )
+          histogram$ui(ns("hist"))
         )
       )
     )
@@ -114,10 +112,6 @@ server <- function(id) {
       input$settime
     })
 
-    shiny$observeEvent(input$start, {
-      shinyjs$enable("download")
-    })
-
 
     shiny$observeEvent(input$finish, {
       shinyjs$enable("download_times")
@@ -131,13 +125,13 @@ server <- function(id) {
     type <- itvw_type$server("itvw_type")
 
 
-    llm_action2$server(
+    data <- llm_action2$server(
       "out_ai", start_button, next_button,
       key, position, job_desc, company,
       type, experience
     )
 
-
+    download$server("download", data, "questions", start_button)
 
 
     time_spent_df <- timer$server("timerid",
