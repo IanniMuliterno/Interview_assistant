@@ -6,9 +6,10 @@ InterviewPro is a Shiny app designed to empower tech professionals with effectiv
 [Use it now](https://ianmuliterno.shinyapps.io/interview_assistant/)
 
 ## Features
-- **Elevator Pitch Practice**: Interactive exercises to craft and refine your pitch within the crucial 3-minute window.
-- **Feedback Mechanism**: Receive instant feedback on your pitch's clarity, conciseness, and impact.
+- **Elevator Pitch Practice**: Interactive exercises to craft and refine your pitch within the crucial 3 to 5 minute window.
+- **Feedback Mechanism**: at the end of your questions you will receive feedback on your pitch's clarity, conciseness, and impact.
 - **Customizable Scenarios**: Tailor your practice sessions according to specific job roles and industries.
+- **Download available**: You can download your customized interview quesitons and the dataset of your time spent for each question.
 
 ## Getting Started 
 Clone this repository to your local machine using:
