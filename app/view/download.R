@@ -1,5 +1,5 @@
 box::use(
-  shiny[downloadButton, moduleServer, downloadHandler, NS, observeEvent],
+  shiny[downloadButton, moduleServer, downloadHandler, NS, observeEvent, validate, need, ],
   shinyjs[enable, disabled],
   markdown[markdownToHTML],
   utils[write.csv],
@@ -10,11 +10,15 @@ ui <- function(id, title) {
   disabled(downloadButton(ns("download"), title))
 }
 
-server <- function(id, data, archive_name, start) {
+server <- function(id, data, archive_name, start, your_key) {
   moduleServer(
     id,
     function(input, output, session) {
       observeEvent(start(), {
+        validate(
+          need(your_key$value() != "", "Please enter your bard key.")
+        )
+
         enable("download")
       })
 

@@ -1,7 +1,8 @@
 box::use(
   shiny[
     NS, req, selectInput, moduleServer, reactive, textOutput, renderText,
-    reactiveVal, observeEvent, observe, invalidateLater, showModal, modalDialog, isolate
+    reactiveVal, observeEvent, observe, invalidateLater, showModal, modalDialog, isolate,
+    validate, need,
   ],
   lubridate[seconds_to_period],
   dplyr[bind_rows],
@@ -18,7 +19,7 @@ ui <- function(id) {
 
 
 #' @export
-server <- function(id, timespan, start_button, next_button, finish_button) {
+server <- function(id, timespan, start_button, next_button, finish_button, your_key) {
   moduleServer(id, function(input, output, session) {
     hist_df <- reactiveVal(data.frame(time_spent = numeric()))
 
@@ -29,6 +30,11 @@ server <- function(id, timespan, start_button, next_button, finish_button) {
 
 
     output$output_text <- renderText({
+      validate(
+        need(your_key$value() != "", "Please enter your bard key.")
+      )
+
+
       paste("Time left: ", seconds_to_period(timer()))
     })
 

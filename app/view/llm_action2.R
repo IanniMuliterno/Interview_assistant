@@ -1,7 +1,8 @@
 box::use(
   shiny[
     NS, HTML, selectInput, moduleServer, reactive, uiOutput, renderUI,
-    reactiveVal, eventReactive, observeEvent, observe, invalidateLater, req
+    reactiveVal, eventReactive, observeEvent, observe, invalidateLater, req,
+    validate, need,
   ],
   lubridate[seconds_to_period],
   stringr[str_split],
@@ -31,6 +32,10 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
     current_question_index <- reactiveVal(1)
 
     questions <- eventReactive(start_button(), {
+      validate(
+        need(your_key$value() != "", "Please enter your bard key.")
+      )
+
       combined_prompt <- prompt_fun$prompt_gen(
         position_input$value(), desc_input$value(), company_input$value(),
         type_input$value(), exp_input$value()

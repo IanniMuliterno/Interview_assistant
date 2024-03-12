@@ -40,6 +40,7 @@ ui <- function(id) {
                    https://www.cloudbooklet.com/ai-text/googles-bard-api-key/</a></p>")
         ),
         bslib$card(
+          bslib$card_header("Timer"),
           timer$ui(ns("timerid"))
         ),
         bslib$card(
@@ -113,10 +114,6 @@ server <- function(id) {
     })
 
 
-    shiny$observeEvent(input$finish, {
-      shinyjs$enable("download_times")
-    })
-
     key <- text_input$server("key")
     position <- text_input$server("position")
     job_desc <- text_input$server("job_desc")
@@ -133,13 +130,13 @@ server <- function(id) {
 
     time_spent_df <- timer$server("timerid",
       timespan = timespan_reactive, start_button = start_button,
-      next_button = next_button, finish_button = finish_button
+      next_button = next_button, finish_button = finish_button, key
     )
 
 
     histogram$server("hist", hist_df = time_spent_df)
 
-    download$server("download", data, "questions.html", start_button)
-    download$server("download_times", time_spent_df, "timespent.csv", finish_button)
+    download$server("download", data, "questions.html", start_button, key)
+    download$server("download_times", time_spent_df, "timespent.csv", finish_button, key)
   })
 }
