@@ -3,7 +3,8 @@
 ## Overview
 InterviewPro is a Shiny app designed to empower tech professionals with effective interview preparation tools. Developed by Ían Muliterno, a data scientist with 8 years of experience, this app tackles common challenges faced during job interviews, such as nervousness and difficulty in concisely presenting one's skills and achievements. 
 
-[Use it now](https://ianmuliterno.shinyapps.io/interview_assistant/)
+[Use it now](https://ianmuliterno.shinyapps.io/interview_assistant/) 
+
 [check my post about the app](https://imuliterno.netlify.app/posts/2024-03-interview_assistant/)
 
 ## Features
