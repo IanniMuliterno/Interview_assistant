@@ -16,7 +16,7 @@ InterviewPro is a Shiny app designed to empower tech professionals with effectiv
 ## Getting Started 
 Clone this repository to your local machine using:
 ```bash
-git clone https://github.com/yourusername/InterviewPro.git
+git clone https://github.com/IanniMuliterno/Interview_assistant.git
 ```
 Navigate into the project directory and run the app with:
 ```R
