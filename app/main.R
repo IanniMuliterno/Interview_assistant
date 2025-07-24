@@ -25,19 +25,19 @@ ui <- function(id) {
       shiny$sidebarPanel(
         text_input$ui(
           id = ns("key"),
-          "Bard key",
-          "insert your bard key"
+          "Groq key",
+          "insert your Groq key"
         ),
         shiny$numericInput(ns("settime"), "Seconds:", value = 180, min = 0, max = 240, step = 1),
         bslib$card(
           full_screen = FALSE,
           bslib$card_header("Directions"),
-          shiny$HTML("Maximize your interview impact. Everything you need is to generate a bard key
+          shiny$HTML("Maximize your interview impact. Everything you need is to generate a Groq key
                      and 'interviewpro' will guide you to concise and compelling self-presentation.
-                   <p>Find your own Bard API by following the instructions here: <a
-                   href='https://www.cloudbooklet.com/ai-text/googles-bard-api-key/'
+                   <p>Find your own Groq API by following the instructions here: <a
+                   href='https://console.groq.com/keys'
                    target='_blank'>
-                   https://www.cloudbooklet.com/ai-text/googles-bard-api-key/</a></p>")
+                   https://console.groq.com/keys")
         ),
         bslib$card(
           bslib$card_header("Timer"),

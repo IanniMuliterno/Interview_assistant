@@ -1,11 +1,11 @@
 name: interview_assistant
-title:
+title: interview_assistant
 username: ianmuliterno
 account: ianmuliterno
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11252975
-bundleId: 8365031
+bundleId: 10669721
 url: https://ianmuliterno.shinyapps.io/interview_assistant/
 version: 1
 asMultiple: FALSE

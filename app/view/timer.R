@@ -31,7 +31,7 @@ server <- function(id, timespan, start_button, next_button, finish_button, your_
 
     output$output_text <- renderText({
       validate(
-        need(your_key$value() != "", "Please enter your bard key.")
+        need(your_key$value() != "", "Please enter your groq key.")
       )
 
 

@@ -33,7 +33,7 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
 
     questions <- eventReactive(start_button(), {
       validate(
-        need(your_key$value() != "", "Please enter your bard key.")
+        need(your_key$value() != "", "Please enter your Groq key.")
       )
 
       combined_prompt <- prompt_fun$prompt_gen(
@@ -43,7 +43,7 @@ server <- function(id, start_button, next_button, your_key, position_input, desc
 
       api_output <- api_connection$your_llm(
         prompt = combined_prompt,
-        your_bard_key = your_key$value()
+        groq_api_key = your_key$value()
       )
 
       result <- str_split(api_output, "[0-9]\\.|\\*\\*X Awesome Advice X\\*\\*")
